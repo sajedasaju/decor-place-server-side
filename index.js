@@ -24,12 +24,22 @@ async function run() {
         const inventoryCollection = client.db("decorPlace").collection('product');
 
         //find all inventories
-        app.get('/inventories', async (req, res) => {
+        app.get('/inventory', async (req, res) => {
             const query = {};
             const cursor = inventoryCollection.find(query);
             const result = await cursor.toArray();
             res.send(result)
 
+        })
+
+        //get inventory id wise
+        app.get('/inventory/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) };
+
+            const inventory = await inventoryCollection.findOne(query);
+
+            res.send(inventory)
         })
 
     }
