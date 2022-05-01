@@ -25,7 +25,7 @@ async function run() {
 
         //find all inventories
         app.get('/inventory', async (req, res) => {
-            const query = {};
+            const query = req.query;
             const cursor = inventoryCollection.find(query);
             const result = await cursor.toArray();
             res.send(result)
@@ -50,6 +50,13 @@ async function run() {
 
             res.send(result)
 
+        })
+
+        //post or add inventory
+        app.post('/inventory', async (req, res) => {
+            const newInventory = req.body;
+            const result = await inventoryCollection.insertOne(newInventory);
+            res.send(result);
         })
 
 
