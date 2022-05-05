@@ -44,6 +44,7 @@ async function run() {
     try {
         await client.connect();
         const inventoryCollection = client.db("decorPlace").collection('product');
+        const myInventoryCollection = client.db("decorPlace").collection('myInventory');
 
         //AUTH
         app.post('/login', async (req, res) => {
@@ -58,13 +59,61 @@ async function run() {
         //services api
 
         //find all inventories
+        // app.get('/inventoryl', async (req, res) => {
+        //     const query = req.query;
+        //     const cursor = inventoryCollection.find(query);
+        //     const result = await cursor.toArray();
+        //     res.send(result)
+
+        // })
+
+        // find all inventories
         app.get('/inventory', async (req, res) => {
-            const query = req.query;
+            const query = req.query
             const cursor = inventoryCollection.find(query);
             const result = await cursor.toArray();
             res.send(result)
 
         })
+
+
+        // app.get('/inventory', verifyJWT, async (req, res) => {
+        //     // const query = req.query;
+        //     const email = req.query.email;
+        //     const decodedEmail = req.decoded.email
+        //     if (req.query.email) {
+        //         if (email === decodedEmail) {
+        //             const query = { email: email };
+        //             const cursor = inventoryCollection.find(query);
+        //             const result = await cursor.toArray();
+        //             res.send(result)
+        //         }
+        //         else {
+        //             res.status(403).send({ message: 'Forbidden access' })
+        //         }
+        //     }
+        //     else {
+        //         const query = {};
+        //         const cursor = inventoryCollection.find(query);
+        //         const result = await cursor.toArray();
+        //         res.send(result)
+        //     }
+
+
+        // if ((Object.keys(query).length > 0)) {
+        //     if ((query.email === decodedEmail)) {
+        //         console.log(query.email, "ikta email")
+        //         //const query = { email: email };
+        //         const cursor = inventoryCollection.find(query);
+        //         const result = await cursor.toArray();
+        //         res.send(result)
+        //     }
+        // }
+
+        // else {
+        //     res.status(403).send({ message: 'Forbidden access' })
+        // }
+        // })
 
         //get inventory id wise
         app.get('/inventory/:id', async (req, res) => {
@@ -92,6 +141,12 @@ async function run() {
             const result = await inventoryCollection.insertOne(newInventory);
             res.send(result);
         })
+        //post or add inventory for email varification (my inventory collection)
+        // app.post('/myInventory', async (req, res) => {
+        //     const newInventory = req.body;
+        //     const result = await myInventoryCollection.insertOne(newInventory);
+        //     res.send(result);
+        // })
 
         //update user
         app.put('/inventory/:id', async (req, res) => {
