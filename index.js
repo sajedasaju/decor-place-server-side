@@ -80,6 +80,36 @@ async function run() {
         // app.get('/inventory', verifyJWT, async (req, res) => {
         //     // const query = req.query;
         //     const email = req.query.email;
+        //     console.log(email, req.query)
+        //     const decodedEmail = req.decoded.email;
+
+        //     if (req.query.email) {
+        //         if (email === decodedEmail) {
+        //             const query = { email: email };
+        //             const cursor = inventoryCollection.find(query);
+        //             const result = await cursor.toArray();
+        //             // console.log('hurtrrrrrr')
+        //             res.send(result)
+
+        //         }
+        //         else {
+        //             res.status(403).send({ message: 'Forbidden access' })
+        //         }
+        //     }
+        //     else {
+
+        //         const query = {};
+        //         console.log("From query null", query)
+        //         const cursor = inventoryCollection.find(query);
+        //         const result = await cursor.toArray();
+        //         res.send(result)
+        //     }
+        // })
+
+
+        // app.get('/inventory', verifyJWT, async (req, res) => {
+        //     // const query = req.query;
+        //     const email = req.query.email;
         //     const decodedEmail = req.decoded.email
         //     if (req.query.email) {
         //         if (email === decodedEmail) {
