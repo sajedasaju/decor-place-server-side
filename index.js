@@ -58,53 +58,44 @@ async function run() {
 
         //services api
 
-        //find all inventories
-        // app.get('/inventoryl', async (req, res) => {
-        //     const query = req.query;
+
+        // find all inventories
+        // app.get('/inventory', async (req, res) => {
+        //     const query = req.query
         //     const cursor = inventoryCollection.find(query);
         //     const result = await cursor.toArray();
         //     res.send(result)
 
         // })
 
-        // find all inventories
-        app.get('/inventory', async (req, res) => {
-            const query = req.query
-            const cursor = inventoryCollection.find(query);
-            const result = await cursor.toArray();
-            res.send(result)
 
+        app.get('/inventory', verifyJWT, async (req, res) => {
+            // const query = req.query;
+            const email = req.query.email;
+            console.log(email, req.query)
+            const decodedEmail = req.decoded.email;
+
+            if (req.query.email) {
+                if (email === decodedEmail) {
+                    const query = { email: email };
+                    const cursor = inventoryCollection.find(query);
+                    const result = await cursor.toArray();
+                    res.send(result)
+
+                }
+                else {
+                    res.status(403).send({ message: 'Forbidden access' })
+                }
+            }
+            else {
+
+                const query = {};
+                console.log("From query null", query)
+                const cursor = inventoryCollection.find(query);
+                const result = await cursor.toArray();
+                res.send(result)
+            }
         })
-
-
-        // app.get('/inventory', verifyJWT, async (req, res) => {
-        //     // const query = req.query;
-        //     const email = req.query.email;
-        //     console.log(email, req.query)
-        //     const decodedEmail = req.decoded.email;
-
-        //     if (req.query.email) {
-        //         if (email === decodedEmail) {
-        //             const query = { email: email };
-        //             const cursor = inventoryCollection.find(query);
-        //             const result = await cursor.toArray();
-        //             // console.log('hurtrrrrrr')
-        //             res.send(result)
-
-        //         }
-        //         else {
-        //             res.status(403).send({ message: 'Forbidden access' })
-        //         }
-        //     }
-        //     else {
-
-        //         const query = {};
-        //         console.log("From query null", query)
-        //         const cursor = inventoryCollection.find(query);
-        //         const result = await cursor.toArray();
-        //         res.send(result)
-        //     }
-        // })
 
 
         // app.get('/inventory', verifyJWT, async (req, res) => {
@@ -132,7 +123,6 @@ async function run() {
 
         // if ((Object.keys(query).length > 0)) {
         //     if ((query.email === decodedEmail)) {
-        //         console.log(query.email, "ikta email")
         //         //const query = { email: email };
         //         const cursor = inventoryCollection.find(query);
         //         const result = await cursor.toArray();
@@ -144,6 +134,7 @@ async function run() {
         //     res.status(403).send({ message: 'Forbidden access' })
         // }
         // })
+
 
         //get inventory id wise
         app.get('/inventory/:id', async (req, res) => {
