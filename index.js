@@ -10,8 +10,7 @@ const app = express();
 //middleware
 app.use(cors());
 app.use(express.json());
-//user: decorPlaceUser
-//password: t2SkuEAQoWy7OxIl
+
 
 function verifyJWT(req, res, next) {
     const authHeader = req.headers.authorization;
@@ -67,6 +66,14 @@ async function run() {
             res.send(result)
 
         })
+        //for pagination
+        app.get('/productCount', async (req, res) => {
+            const query = {}
+            const cursor = inventoryCollection.find(query);
+            const count = await cursor.count();
+            res.send({ count })
+
+        })
 
 
         // app.get('/inventory', verifyJWT, async (req, res) => {
@@ -95,7 +102,10 @@ async function run() {
         //         const result = await cursor.toArray();
         //         res.send(result)
         //     }
-        // })
+        // }) 
+
+
+
 
 
         // app.get('/inventory', verifyJWT, async (req, res) => {
@@ -121,19 +131,22 @@ async function run() {
         //     }
 
 
-        // if ((Object.keys(query).length > 0)) {
-        //     if ((query.email === decodedEmail)) {
-        //         //const query = { email: email };
-        //         const cursor = inventoryCollection.find(query);
-        //         const result = await cursor.toArray();
-        //         res.send(result)
+        //     if ((Object.keys(query).length > 0)) {
+        //         if ((query.email === decodedEmail)) {
+        //             //const query = { email: email };
+        //             const cursor = inventoryCollection.find(query);
+        //             const result = await cursor.toArray();
+        //             res.send(result)
+        //         }
         //     }
-        // }
 
-        // else {
-        //     res.status(403).send({ message: 'Forbidden access' })
-        // }
+        //     else {
+        //         res.status(403).send({ message: 'Forbidden access' })
+        //     }
         // })
+
+
+
 
 
         //get inventory id wise
